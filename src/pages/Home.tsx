@@ -8,7 +8,6 @@ import '../styles/auth.scss';
 import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
 
-
 export function Home() {
   const history = useHistory();
   const { user, signInWithGoogle } = useAuth();
