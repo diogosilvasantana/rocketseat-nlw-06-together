@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { FormEvent, useState } from 'react';
 
@@ -14,7 +14,7 @@ import { useAuth } from '../hooks/useAuth';
 
 export function NewRoom() {
   const { user } = useAuth();
-
+  const history = useHistory();
   const [newRoom, setNewRoom] = useState('');
 
   async function handleCreateRoom(event: FormEvent) {
@@ -30,6 +30,8 @@ export function NewRoom() {
       title: newRoom,
       authorId: user?.id
     })
+
+    history.push(`/rooms/${firebaseRoom.key}`)
   }
 
   return (
@@ -49,7 +51,7 @@ export function NewRoom() {
               type="text"
               placeholder="Nome da sala"
               onChange={event => setNewRoom(event.target.value)}
-              value={newRoom}
+              defaultValue={newRoom}
             />
             <Button type="submit">
               Criar sala
