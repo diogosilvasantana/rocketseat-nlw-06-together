@@ -11,6 +11,27 @@ import { database } from '../services/firebase';
 
 import '../styles/room.scss';
 
+type FirebaseQuestions = Record<string, {
+  author: {
+    name: string;
+    avatar: string;
+  }
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
+}>
+
+type Question = {
+  id: string;
+  author: {
+    name: string;
+    avatar: string;
+  }
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
+}
+
 type RoomParams = {
   id: string;
 }
@@ -19,6 +40,7 @@ export function Room() {
   const { user } = useAuth();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
+<<<<<<< HEAD
   const roomId = params.id;
   const { title, questions } = useRoom(roomId);
 
@@ -26,24 +48,66 @@ export function Room() {
     event.preventDefault();
 
     if (newQuestion.trim() === '') {
+=======
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [title, setTitle] = useState('');
+
+  const roomId = params.id;
+
+  useEffect(() => {
+    const roomRef = database.ref(`rooms/${roomId}`);
+
+    roomRef.on('value', room => {
+      const databaseRoom = room.val();
+      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions;
+
+      const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+        return {
+          id: key,
+          content: value.content,
+          author: value.author,
+          isHighlighted: value.isHighlighted,
+          isAnswered: value.isAnswered,
+        }
+      })
+
+      setTitle(databaseRoom.title);
+      setQuestions(parsedQuestions);
+      
+    })
+  }, [roomId]);
+
+  async function handleSendQuestion(event: FormEvent) {
+    
+    if (newQuestion.trim() === ''){
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
       return;
     }
 
     if (!user) {
+<<<<<<< HEAD
       throw new Error('You must be logged in');
+=======
+      throw new Error ('You must be logged in');
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
     }
 
     const question = {
       content: newQuestion,
       author: {
         name: user.name,
+<<<<<<< HEAD
         avatar: user.avatar,
+=======
+        avatar: user.avatar
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
       },
       isHighlighted: false,
       isAnswered: false
     };
 
     await database.ref(`rooms/${roomId}/questions`).push(question);
+<<<<<<< HEAD
 
     setNewQuestion('');
   }
@@ -56,6 +120,9 @@ export function Room() {
         authorId: user?.id,
       })
     }
+=======
+    event.preventDefault();
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
   }
 
   return (
@@ -63,14 +130,22 @@ export function Room() {
       <header>
         <div className="content">
           <img src={logoImg} alt="Letmeask" />
+<<<<<<< HEAD
           <RoomCode code={roomId} />
+=======
+          <RoomCode code={roomId}/>
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
         </div>
       </header>
 
       <main>
         <div className="room-title">
           <h1>Sala {title}</h1>
+<<<<<<< HEAD
           {questions.length > 0 && <span>{questions.length} {questions.length === 1 ? 'pergunta' : 'perguntas'}</span>}
+=======
+          {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
         </div>
 
         <form onSubmit={handleSendQuestion}>
@@ -81,19 +156,28 @@ export function Room() {
           />
 
           <div className="form-footer">
+<<<<<<< HEAD
             {user ? (
+=======
+            { user ? (
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
               <div className="user-info">
                 <img src={user.avatar} alt={user.name} />
                 <span>{user.name}</span>
               </div>
             ) : (
+<<<<<<< HEAD
               <span>Para enviar sua pergunta, <button>faça seu login</button>.</span>
+=======
+              <span>Para enviar uma pergunta, <button>faça seu login</button>.</span>
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
             )}
             <Button type="submit" disabled={!user}>Enviar pergunta</Button>
           </div>
 
         </form>
 
+<<<<<<< HEAD
         <div className="question-list">
           {questions.map(question => {
             return (
@@ -118,6 +202,9 @@ export function Room() {
           })}
         </div>
 
+=======
+        {JSON.stringify(questions)}
+>>>>>>> f0a4550ffaef3ea3c8ceee526ed87f38af3efedc
       </main>
     </div>
   )

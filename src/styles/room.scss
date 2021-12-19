@@ -35,7 +35,7 @@
       align-items: center;
 
       h1 {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 24px;
         color: #29292e;
       }
@@ -57,15 +57,15 @@
         border: 0;
         padding: 16px;
         border-radius: 8px;
-        background:#fefefe;
-        box-shadow: 0 2px 12px rgba(0,0,0, 0.04);
+        background: #fefefe;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         resize: vertical;
         min-height: 130px;
       }
 
       .form-footer {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         align-items: center;
         margin-top: 16px;
 
@@ -95,14 +95,13 @@
           button {
             background: transparent;
             border: 0;
-            color: #835AFD;
+            color: #835afd;
             text-decoration: underline;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
           }
         }
-
       }
     }
 
@@ -110,5 +109,4 @@
       margin-top: 32px;
     }
   }
-
 }
